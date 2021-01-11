@@ -1,7 +1,8 @@
 import React from "react";
 import { Dimensions, View, StyleSheet, Text } from "react-native";
 
-import { Product } from "../models/Product";
+import { Asset } from "../models/Asset";
+import colors from "../utils/Colors";
 
 import Button from "./Button";
 import CardHeader from "./CardHeader";
@@ -29,10 +30,11 @@ const styles = StyleSheet.create({
 });
 
 interface CardProps {
-  product: Product;
+  asset: Asset;
 }
 
-const Card = ({ product: { color1, title, subtitle } }: CardProps) => {
+const Card = ({ asset: { name, symbol } }: CardProps) => {
+  const color = colors[symbol] || "#5FA7EE";
   return (
     <View style={styles.container}>
       <View
@@ -40,17 +42,17 @@ const Card = ({ product: { color1, title, subtitle } }: CardProps) => {
           borderRadius: 16,
           margin: 32,
           flex: 1,
-          backgroundColor: color1,
+          backgroundColor: color,
           padding: 16,
           justifyContent: "space-between",
         }}
       >
         <View>
           <CardHeader />
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle}>{subtitle}</Text>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.subtitle}>{symbol}</Text>
         </View>
-        <Button label="I'll try it" />
+        <Button label="See details" />
       </View>
     </View>
   );

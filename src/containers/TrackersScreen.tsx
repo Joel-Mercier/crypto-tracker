@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -11,8 +11,10 @@ import { products } from "../models/Product";
 import Card, { CARD_HEIGHT } from "../components/Card";
 import Products from "../components/Products";
 import Cards, { cards } from "../components/Cards";
+import { getAssets } from "../services/CoinCapApi";
+import { Asset } from "../models/Asset";
 
-export const assets = products
+export const screenAssets = products
   .map((product) => product.picture)
   .concat(cards.map((card) => card.picture));
 
@@ -24,6 +26,18 @@ const styles = StyleSheet.create({
 const snapToOffsets = [0, CARD_HEIGHT];
 
 const TrackersScreen = () => {
+  const [assets, setAssets] = useState<{
+    data?: Asset[];
+    error?: boolean;
+    errorMessage?: string;
+  }>({ data: [] });
+  useEffect(() => {
+    async function fetchData() {
+      const response = await getAssets({ limit: 10 });
+      setAssets(response);
+    }
+    fetchData();
+  }, []);
   const translateX = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler({
     onScroll: (event) => {
@@ -49,19 +63,23 @@ const TrackersScreen = () => {
         decelerationRate="fast"
       >
         <View style={styles.slider}>
-          <Animated.ScrollView
-            onScroll={onScroll}
-            scrollEventThrottle={16}
-            decelerationRate="fast"
-            snapToInterval={width}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          >
-            {products.map((product, index) => (
-              <Card product={product} key={index} />
-            ))}
-          </Animated.ScrollView>
-          <Products x={translateX} />
+          <>
+            {assets && assets.data && (
+              <Animated.ScrollView
+                onScroll={onScroll}
+                scrollEventThrottle={16}
+                decelerationRate="fast"
+                snapToInterval={width}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              >
+                {assets.data.map((asset, index) => (
+                  <Card asset={asset} key={index} />
+                ))}
+              </Animated.ScrollView>
+            )}
+            <Products x={translateX} />
+          </>
         </View>
         <Cards />
       </ScrollView>

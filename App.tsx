@@ -1,10 +1,9 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import LoadAssets from "./src/components/LoadAssets";
 import TrackersScreen, {
-  assets as trackersAssets,
+  screenAssets as trackersAssets,
 } from "./src/containers/TrackersScreen";
 
 const Tab = createBottomTabNavigator();
