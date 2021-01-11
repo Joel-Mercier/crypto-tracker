@@ -1,21 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-export default function App() {
+import LoadAssets from "./src/components/LoadAssets";
+import TrackersScreen, {
+  assets as trackersAssets,
+} from "./src/containers/TrackersScreen";
+
+const Tab = createBottomTabNavigator();
+
+const fonts = {
+  "GothamRounded-Medium": require("./src/assets/fonts/GothamRounded/GothamRounded-Medium.otf"),
+  "GothamRounded-Bold": require("./src/assets/fonts/GothamRounded/GothamRounded-Bold.otf"),
+  "GothamRounded-Light": require("./src/assets/fonts/GothamRounded/GothamRounded-Light.otf"),
+};
+
+const assets = [...trackersAssets];
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <LoadAssets assets={assets} fonts={fonts}>
+      <Tab.Navigator>
+        <Tab.Screen name="Trackers" component={TrackersScreen} />
+      </Tab.Navigator>
+    </LoadAssets>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
