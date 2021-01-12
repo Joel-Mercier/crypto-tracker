@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Feather as Icon } from "@expo/vector-icons";
+
+import { Asset } from "../models/Asset";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,14 +22,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const CardHeader = () => {
+interface CardHeaderProps {
+  asset: Asset;
+}
+
+const CardHeader = ({ asset }: CardHeaderProps) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }} />
-      <Text style={styles.title}>RECOMMEND</Text>
-      <View style={styles.action}>
-        <Icon name="edit" size={16} />
-      </View>
+      <Text style={styles.title}>{asset.name}</Text>
+      <View style={styles.action}></View>
     </View>
   );
 };

@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   interpolateColor,
 } from "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { products } from "../models/Product";
 import Card, { CARD_HEIGHT } from "../components/Card";
@@ -62,25 +63,27 @@ const TrackersScreen = () => {
         snapToEnd={false}
         decelerationRate="fast"
       >
-        <View style={styles.slider}>
-          <>
-            {assets && assets.data && (
-              <Animated.ScrollView
-                onScroll={onScroll}
-                scrollEventThrottle={16}
-                decelerationRate="fast"
-                snapToInterval={width}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-              >
-                {assets.data.map((asset, index) => (
-                  <Card asset={asset} key={index} />
-                ))}
-              </Animated.ScrollView>
-            )}
-            <Products x={translateX} />
-          </>
-        </View>
+        <SafeAreaView>
+          <View style={styles.slider}>
+            <>
+              {assets && assets.data && (
+                <Animated.ScrollView
+                  onScroll={onScroll}
+                  scrollEventThrottle={16}
+                  decelerationRate="fast"
+                  snapToInterval={width}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                >
+                  {assets.data.map((asset, index) => (
+                    <Card asset={asset} key={index} />
+                  ))}
+                </Animated.ScrollView>
+              )}
+              {/* <Products x={translateX} /> */}
+            </>
+          </View>
+        </SafeAreaView>
         <Cards />
       </ScrollView>
     </Animated.View>

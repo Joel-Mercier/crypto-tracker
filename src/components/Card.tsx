@@ -1,11 +1,12 @@
 import React from "react";
-import { Dimensions, View, StyleSheet, Text } from "react-native";
+import { Dimensions, View, StyleSheet } from "react-native";
 
 import { Asset } from "../models/Asset";
 import colors from "../utils/Colors";
 
 import Button from "./Button";
 import CardHeader from "./CardHeader";
+import Graph from "./Graph";
 
 const { width } = Dimensions.get("window");
 export const CARD_HEIGHT = (width * 1564) / 974;
@@ -33,8 +34,8 @@ interface CardProps {
   asset: Asset;
 }
 
-const Card = ({ asset: { name, symbol } }: CardProps) => {
-  const color = colors[symbol] || "#5FA7EE";
+const Card = ({ asset }: CardProps) => {
+  const color = colors[asset.symbol] || "#5FA7EE";
   return (
     <View style={styles.container}>
       <View
@@ -48,9 +49,8 @@ const Card = ({ asset: { name, symbol } }: CardProps) => {
         }}
       >
         <View>
-          <CardHeader />
-          <Text style={styles.title}>{name}</Text>
-          <Text style={styles.subtitle}>{symbol}</Text>
+          <CardHeader asset={asset} />
+          <Graph />
         </View>
         <Button label="See details" />
       </View>
