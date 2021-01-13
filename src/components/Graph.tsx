@@ -65,7 +65,7 @@ const Graph = () => {
   }));
   return (
     <View style={styles.container}>
-      {/* <Header translation={translation} index={current} /> */}
+      <Header translation={translation} index={current} />
       <View>
         <Svg width={SIZE} height={SIZE}>
           <AnimatedPath

@@ -9,6 +9,8 @@ import { ReText, Vector, round } from "react-native-redash";
 
 import { graphs, SIZE } from "../models/Graph";
 
+import ETH from "./ETH";
+
 const styles = StyleSheet.create({
   container: {
     padding: 16,
@@ -53,6 +55,7 @@ const Header = ({ translation, index }: HeaderProps) => {
   }));
   return (
     <View style={styles.container}>
+      <ETH />
       <View style={styles.values}>
         <View>
           <ReText style={styles.value} text={price} />

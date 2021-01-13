@@ -6,7 +6,6 @@ import colors from "../utils/Colors";
 
 import Button from "./Button";
 import CardHeader from "./CardHeader";
-import Graph from "./Graph";
 
 const { width } = Dimensions.get("window");
 export const CARD_HEIGHT = (width * 1564) / 974;
@@ -50,7 +49,6 @@ const Card = ({ asset }: CardProps) => {
       >
         <View>
           <CardHeader asset={asset} />
-          <Graph />
         </View>
         <Button label="See details" />
       </View>

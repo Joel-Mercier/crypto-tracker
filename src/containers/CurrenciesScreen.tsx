@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 });
 const snapToOffsets = [0, CARD_HEIGHT];
 
-const TrackersScreen = () => {
+const CurrenciesScreen = () => {
   const [assets, setAssets] = useState<{
     data?: Asset[];
     error?: boolean;
@@ -80,7 +80,7 @@ const TrackersScreen = () => {
                   ))}
                 </Animated.ScrollView>
               )}
-              {/* <Products x={translateX} /> */}
+              <Products x={translateX} />
             </>
           </View>
         </SafeAreaView>
@@ -90,4 +90,4 @@ const TrackersScreen = () => {
   );
 };
 
-export default TrackersScreen;
+export default CurrenciesScreen;
