@@ -1,8 +1,7 @@
-import { Colors } from "react-native/Libraries/NewAppScreen";
-
 const colors = {
-  BTC: "#F6931C",
-  ETH: "#6C89ED",
+  btc: "#F6931C",
+  eth: "#6C89ED",
+  doge: "#F6931C",
 };
 
 export default colors;

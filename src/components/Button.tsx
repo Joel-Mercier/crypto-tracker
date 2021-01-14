@@ -1,14 +1,15 @@
 import React from "react";
 import {
   View,
-  TouchableWithoutFeedback,
   Text,
   StyleSheet,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 
 interface ButtonProps {
   label: string;
+  onPress: () => void;
 }
 
 const width = (Dimensions.get("window").width - 64) / 2;
@@ -32,13 +33,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const Button = ({ label }: ButtonProps) => {
+const Button = ({ label, onPress }: ButtonProps) => {
   return (
-    <TouchableWithoutFeedback>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <Text style={styles.label}>{label}</Text>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 

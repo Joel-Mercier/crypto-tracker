@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Graph from "../components/Graph";
 import Footer from "../components/Footer";
@@ -16,10 +17,10 @@ interface CurrencyScreenProps {};
 
 const CurrencyScreen = ({}: CurrencyScreenProps) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Graph />
       <Footer />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useEffect, useState } from "react";
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
 import Animated, {
@@ -12,8 +13,12 @@ import { products } from "../models/Product";
 import Card, { CARD_HEIGHT } from "../components/Card";
 import Products from "../components/Products";
 import Cards, { cards } from "../components/Cards";
-import { getAssets } from "../services/CoinCapApi";
-import { Asset } from "../models/Asset";
+import {
+  getCoins,
+  CoinGeckoApiResponse,
+  getCoinSimplePrices,
+} from "../services/CoinGeckoApi";
+import { supportedCoins, supportedVsCurrencies } from "../models/Coin";
 
 export const screenAssets = products
   .map((product) => product.picture)
@@ -27,15 +32,24 @@ const styles = StyleSheet.create({
 const snapToOffsets = [0, CARD_HEIGHT];
 
 const CurrenciesScreen = () => {
-  const [assets, setAssets] = useState<{
-    data?: Asset[];
-    error?: boolean;
-    errorMessage?: string;
-  }>({ data: [] });
+  const [coins, setCoins] = useState<CoinGeckoApiResponse>({ data: [] });
+  const [
+    simpleCoinPrices,
+    setSimpleCoinPrices,
+  ] = useState<CoinGeckoApiResponse>({ data: [] });
   useEffect(() => {
     async function fetchData() {
-      const response = await getAssets({ limit: 10 });
-      setAssets(response);
+      const response = await getCoins();
+      const simpleCoinPricesResponse = await getCoinSimplePrices({
+        ids: supportedCoins.join(","),
+        vs_currencies: supportedVsCurrencies.join(","),
+        include_market_cap: "true",
+        include_24hr_vol: "true",
+        include_24hr_change: "true",
+        include_last_updated_at: "true",
+      });
+      setCoins(response);
+      setSimpleCoinPrices(simpleCoinPricesResponse);
     }
     fetchData();
   }, []);
@@ -66,25 +80,34 @@ const CurrenciesScreen = () => {
         <SafeAreaView>
           <View style={styles.slider}>
             <>
-              {assets && assets.data && (
-                <Animated.ScrollView
-                  onScroll={onScroll}
-                  scrollEventThrottle={16}
-                  decelerationRate="fast"
-                  snapToInterval={width}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                >
-                  {assets.data.map((asset, index) => (
-                    <Card asset={asset} key={index} />
-                  ))}
-                </Animated.ScrollView>
-              )}
+              {coins &&
+                coins.data &&
+                simpleCoinPrices &&
+                simpleCoinPrices.data && (
+                  <Animated.ScrollView
+                    onScroll={onScroll}
+                    scrollEventThrottle={16}
+                    decelerationRate="fast"
+                    snapToInterval={width}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                  >
+                    {coins.data
+                      .filter((coin) => supportedCoins.includes(coin.id))
+                      .map((coin, index) => (
+                        <Card
+                          coin={coin}
+                          key={index}
+                          simpleCoinPrice={simpleCoinPrices.data[coin.id]}
+                        />
+                      ))}
+                  </Animated.ScrollView>
+                )}
               <Products x={translateX} />
             </>
           </View>
         </SafeAreaView>
-        <Cards />
+        <Cards simpleCoinPrices={simpleCoinPrices} coins={coins} />
       </ScrollView>
     </Animated.View>
   );

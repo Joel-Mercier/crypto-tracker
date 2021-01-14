@@ -1,5 +1,5 @@
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import LoadAssets from "./src/components/LoadAssets";
 import CurrenciesScreen, {
@@ -7,7 +7,7 @@ import CurrenciesScreen, {
 } from "./src/containers/CurrenciesScreen";
 import CurrencyScreen from "./src/containers/CurrencyScreen";
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const fonts = {
   "GothamRounded-Medium": require("./src/assets/fonts/GothamRounded/GothamRounded-Medium.otf"),
@@ -20,10 +20,16 @@ const assets = [...trackersAssets];
 const App = () => {
   return (
     <LoadAssets assets={assets} fonts={fonts}>
-      <Tab.Navigator initialRouteName="Currencies">
-        <Tab.Screen name="Currencies" component={CurrenciesScreen} />
-        <Tab.Screen name="Currency" component={CurrencyScreen} />
-      </Tab.Navigator>
+      <Stack.Navigator initialRouteName="Currencies">
+        <Stack.Screen
+          name="Currencies"
+          component={CurrenciesScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen name="Currency" component={CurrencyScreen} />
+      </Stack.Navigator>
     </LoadAssets>
   );
 };

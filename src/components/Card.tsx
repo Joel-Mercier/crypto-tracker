@@ -1,8 +1,11 @@
 import React from "react";
-import { Dimensions, View, StyleSheet } from "react-native";
+import { Dimensions, View, StyleSheet, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import { Asset } from "../models/Asset";
+import { Coin } from "../models/Coin";
+import { SimplePrice } from "../models/Price";
 import colors from "../utils/Colors";
+import { priceToCurrency } from "../utils/Money";
 
 import Button from "./Button";
 import CardHeader from "./CardHeader";
@@ -30,11 +33,13 @@ const styles = StyleSheet.create({
 });
 
 interface CardProps {
-  asset: Asset;
+  coin: Coin;
+  simpleCoinPrice: SimplePrice;
 }
 
-const Card = ({ asset }: CardProps) => {
-  const color = colors[asset.symbol] || "#5FA7EE";
+const Card = ({ coin, simpleCoinPrice }: CardProps) => {
+  const navigation = useNavigation();
+  const color = colors[coin.symbol] || "#5FA7EE";
   return (
     <View style={styles.container}>
       <View
@@ -48,9 +53,17 @@ const Card = ({ asset }: CardProps) => {
         }}
       >
         <View>
-          <CardHeader asset={asset} />
+          <CardHeader coin={coin} />
+          <Text style={styles.subtitle}>{coin.name}</Text>
+          <Text style={styles.title}>{coin.name}</Text>
+          {/* <Text style={styles.title}>
+            {priceToCurrency(simpleCoinPrice.usd)}
+          </Text> */}
         </View>
-        <Button label="See details" />
+        <Button
+          label="See details"
+          onPress={() => navigation.navigate("Currency")}
+        />
       </View>
     </View>
   );

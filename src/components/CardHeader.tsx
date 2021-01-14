@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { Asset } from "../models/Asset";
+import { Coin } from "../models/Coin";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,14 +23,14 @@ const styles = StyleSheet.create({
 });
 
 interface CardHeaderProps {
-  asset: Asset;
+  coin: Coin;
 }
 
-const CardHeader = ({ asset }: CardHeaderProps) => {
+const CardHeader = ({ coin }: CardHeaderProps) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }} />
-      <Text style={styles.title}>{asset.name}</Text>
+      <Text style={styles.title}>{coin.symbol}</Text>
       <View style={styles.action}></View>
     </View>
   );

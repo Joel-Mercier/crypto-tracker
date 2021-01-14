@@ -2,6 +2,10 @@
 import React from "react";
 import { View, Image, Text, Dimensions, StyleSheet } from "react-native";
 
+import { Coin, supportedCoins } from "../models/Coin";
+import { SimplePrice } from "../models/Price";
+import { CoinGeckoApiResponse } from "../services/CoinGeckoApi";
+
 const { width } = Dimensions.get("window");
 export const cards = [
   {
@@ -53,29 +57,44 @@ const styles = StyleSheet.create({
 });
 
 interface CardProps {
-  picture: ReturnType<typeof require>;
-  caption: string;
+  simpleCoinPrice: SimplePrice;
+  coin: Coin;
 }
 
-const Card = ({ picture, caption }: CardProps) => {
+const Card = ({ simpleCoinPrice, coin }: CardProps) => {
   return (
     <>
       <View style={styles.container}>
-        <Image source={picture} style={styles.image} />
+        <Image source={cards[0].picture} style={styles.image} />
       </View>
       <View style={styles.caption}>
-        <Text style={styles.text}>{caption}</Text>
+        <Text style={styles.text}>{coin.name}</Text>
+        <Text>{JSON.stringify(simpleCoinPrice)}</Text>
       </View>
     </>
   );
 };
 
-const Cards = () => {
+interface CardsProps {
+  simpleCoinPrices: CoinGeckoApiResponse;
+  coins: CoinGeckoApiResponse;
+}
+
+const Cards = ({ simpleCoinPrices, coins }: CardsProps) => {
+  if (!coins.data || !simpleCoinPrices.data || simpleCoinPrices.error) {
+    return <View />;
+  }
   return (
     <View>
-      {cards.map(({ picture, caption }, index) => (
-        <Card key={index} picture={picture} caption={caption} />
-      ))}
+      {coins.data
+        .filter((coin) => supportedCoins.includes(coin.id))
+        .map((coin, index) => (
+          <Card
+            key={index}
+            simpleCoinPrice={simpleCoinPrices.data[coin.id]}
+            coin={coin}
+          />
+        ))}
     </View>
   );
 };
