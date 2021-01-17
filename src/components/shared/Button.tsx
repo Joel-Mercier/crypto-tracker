@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import colors from "../../utils/Colors";
+
 interface ButtonProps {
   label: string;
   onPress: () => void;
@@ -16,7 +18,7 @@ const width = (Dimensions.get("window").width - 64) / 2;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#432406",
+    backgroundColor: colors.primary,
     padding: 16,
     flexDirection: "row",
     justifyContent: "center",

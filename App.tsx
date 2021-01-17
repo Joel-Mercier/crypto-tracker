@@ -2,9 +2,9 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import LoadAssets from "./src/components/LoadAssets";
-import CurrenciesScreen, {
-  screenAssets as trackersAssets,
-} from "./src/containers/CurrenciesScreen";
+import CoinsScreen, {
+  screenAssets as coinsAssets,
+} from "./src/containers/CoinsScreen";
 import CurrencyScreen from "./src/containers/CurrencyScreen";
 
 const Stack = createStackNavigator();
@@ -15,15 +15,15 @@ const fonts = {
   "GothamRounded-Light": require("./src/assets/fonts/GothamRounded/GothamRounded-Light.otf"),
 };
 
-const assets = [...trackersAssets];
+const assets = [...coinsAssets];
 
 const App = () => {
   return (
     <LoadAssets assets={assets} fonts={fonts}>
-      <Stack.Navigator initialRouteName="Currencies">
+      <Stack.Navigator initialRouteName="Coins">
         <Stack.Screen
-          name="Currencies"
-          component={CurrenciesScreen}
+          name="Coins"
+          component={CoinsScreen}
           options={{
             headerShown: false,
           }}

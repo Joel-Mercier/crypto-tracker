@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import Button from "./Button";
+import Button from "./shared/Button";
 
 const styles = StyleSheet.create({
   actions: {

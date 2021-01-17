@@ -9,8 +9,8 @@ const coinGeckoApi = create({
 });
 
 export interface CoinGeckoApiResponse {
-  data?: Coin[];
-  error?: boolean;
+  data: never[];
+  error: boolean;
   errorMessage?: string;
 }
 
@@ -18,6 +18,7 @@ const normalizeApiData = (apiResponse): CoinGeckoApiResponse => {
   if (apiResponse.ok) {
     return {
       data: apiResponse.data,
+      error: false,
     };
   } else {
     let errorMessage = "";
@@ -46,6 +47,7 @@ const normalizeApiData = (apiResponse): CoinGeckoApiResponse => {
         break;
     }
     return {
+      data: [],
       error: true,
       errorMessage,
     };

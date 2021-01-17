@@ -9,7 +9,7 @@ import { ReText, Vector, round } from "react-native-redash";
 
 import { graphs, SIZE } from "../models/Graph";
 
-import ETH from "./ETH";
+import CoinIcon from "./shared/CoinIcon";
 
 const styles = StyleSheet.create({
   container: {
@@ -55,7 +55,7 @@ const Header = ({ translation, index }: HeaderProps) => {
   }));
   return (
     <View style={styles.container}>
-      <ETH />
+      <CoinIcon id="ethereum" />
       <View style={styles.values}>
         <View>
           <ReText style={styles.value} text={price} />
